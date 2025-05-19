@@ -10,6 +10,8 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
+
 import java.time.Duration;
 import java.util.List;
 
@@ -17,14 +19,15 @@ import java.util.List;
 public class WaitForElement {
     public static void main(String[] args) {
         // 設定 ChromeDriver 路徑
-        System.setProperty("webdriver.chrome.driver", "resource/chromedriver-win64/chromedriver-win64/chromedriver.exe");
-
+        //System.setProperty("webdriver.chrome.driver", "resource/chromedriver-win64/chromedriver-win64/chromedriver.exe");
+    	WebDriverManager.chromedriver().clearDriverCache();
+    	WebDriverManager.chromedriver().setup(); // 自動下載並設定對應的 chromedriver
         // 初始化 WebDriver
         ChromeOptions options = new ChromeOptions();
-        options.addArguments("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36");
-//        options.addArguments("user-agent=Mozilla/5.0 (iPhone; CPU iPhone OS 15_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.0 Mobile/15E148 Safari/604.1");
+//        options.addArguments("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36");
+        options.addArguments("user-agent=Mozilla/5.0 (iPhone; CPU iPhone OS 15_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.0 Mobile/15E148 Safari/604.1");
 
-        options.addArguments("--headless");// 無頭模式
+//        options.addArguments("--headless");// 無頭模式
         options.addArguments("--incognito"); //	無痕模式
         options.addArguments("--disable-gpu"); // 避免 GPU 渲染問題
 //        options.addArguments("--no-sandbox"); // 避免沙箱限制
@@ -41,7 +44,7 @@ public class WaitForElement {
             String baseUrl = "https://www.sinyi.com.tw/tradeinfo/list/Miaoli-county/{zipCode}-zip/6month-dealtime/datatime-desc/index";
 
           
-            for (int i = 100; i <= 116; i++) {
+            for (int i = 350; i <= 351; i++) {
                 // 替換 URL 中的 {zipCode} 部分
                 String dynamicUrl = baseUrl.replace("{zipCode}", String.valueOf(i));
                 driver.get(dynamicUrl);
@@ -54,8 +57,8 @@ public class WaitForElement {
 //          WebElement trendChartDiv = driver.findElement(By.className("trend-chart-avg-mobile"));
             
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15)); // 設定超時時間
-            WebElement trendTitleDiv = wait.until(ExpectedConditions.presenceOfElementLocated(By.className("trend-title")));
-            WebElement trendChartDiv = wait.until(ExpectedConditions.presenceOfElementLocated(By.className("trend-chart-avg-mobile")));
+            WebElement trendTitleDiv = wait.until(ExpectedConditions.presenceOfElementLocated(By.className("trade_trend-title__HWGaj")));
+            WebElement trendChartDiv = wait.until(ExpectedConditions.presenceOfElementLocated(By.className("trade_trend-chart-avg-mobile__tAc1u")));
 
             
 
@@ -65,9 +68,9 @@ public class WaitForElement {
 //            System.out.println("HTML內容: " + trendTitleHTML);
 //            System.out.println("HTML內容: " + trendChartDivHTML);
             
-            String spanElement1 = trendTitleDiv.findElement(By.xpath("//span")).getAttribute("innerHTML");
-            String spanElement2 = trendTitleDiv.findElement(By.xpath(".//span")).getAttribute("innerHTML");
-            String spanElement3 = trendTitleDiv.findElement(By.xpath(".//span[1]")).getAttribute("innerHTML");
+//            String spanElement1 = trendTitleDiv.findElement(By.xpath("//span")).getAttribute("innerHTML");
+//            String spanElement2 = trendTitleDiv.findElement(By.xpath(".//span")).getAttribute("innerHTML");
+//            String spanElement3 = trendTitleDiv.findElement(By.xpath(".//span[1]")).getAttribute("innerHTML");
 
 
             String trendTitle = trendTitleDiv.getText();

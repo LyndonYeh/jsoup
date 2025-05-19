@@ -7,6 +7,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import io.github.bonigarcia.wdm.WebDriverManager;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -14,8 +15,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class PostalCodeScraper {
     public static void main(String[] args) {
     	// 設定 ChromeDriver 的路徑
-        System.setProperty("webdriver.chrome.driver", "C:/Users/gga99/Downloads/chromedriver-win64/chromedriver-win64/chromedriver.exe");
-
+        //System.setProperty("webdriver.chrome.driver", "C:/Users/gga99/Downloads/chromedriver-win64/chromedriver-win64/chromedriver.exe");
+    	WebDriverManager.chromedriver().clearDriverCache();
+    	WebDriverManager.chromedriver().setup(); // 自動下載並設定對應的 chromedriver
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--headless");// 無頭模式
         ChromeDriver driver = new ChromeDriver(options);
